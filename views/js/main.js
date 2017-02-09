@@ -403,16 +403,17 @@ var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
   // Changes the value for the size of the pizza above the slider
+  // change querySelector to getElementById making Web Api Call is faster
   function changeSliderLabel(size) {
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return;
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return;
       default:
         console.log("bug in changeSliderLabel");
@@ -426,7 +427,7 @@ var resizePizzas = function(size) {
     var oldWidth = elem.offsetWidth;
     //var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
     //switch to document.getElementById instead of document.querySelector
-    var windowWidth = document.getElementById("#randomPizzas").offsetWidth;
+    var windowWidth = document.getElementById("randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // Changes the slider value to a percent width
@@ -461,8 +462,9 @@ var resizePizzas = function(size) {
     var pizzaElements = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDX(pizzaElements[0], size);
     var newwidth = (pizzaElements[0].offsetWidth + dx) + 'px';
-
-    for (var i = 0; i < pizzaElements.length;i++) {
+    //save array length, part of condition statement, in local variable, so
+    //arrays length property is accessed to check its value at each iteration
+    for (var i = 0, len = pizzaElements.length ; i < len;i++) {
       pizzaElements[i].style.width = newwidth;
     }
 
@@ -563,9 +565,11 @@ document.addEventListener('DOMContentLoaded', function() {
   var pizzaCount = rows * cols;
   // change query selector call to getElementById, saved this DOM call
   //to local variable, movingPizzas outside of the loop
+  // included elem in the for loop, will prevent it from being created
+  //everytime the loop is executed
   var movingPizzas = document.getElementById('movingPizzas1');
-  for (var i = 0; i < pizzaCount; i++) {
-    var elem = document.createElement('img');
+  for (var i = 0; elem; i < 24; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
