@@ -426,7 +426,7 @@ var resizePizzas = function(size) {
     var oldWidth = elem.offsetWidth;
     //var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
     //switch to document.getElementById instead of document.querySelector
-    var Width = document.getElementById("#randomPizzas").offsetWidth;
+    var windowWidth = document.getElementById("#randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // Changes the slider value to a percent width
@@ -460,7 +460,7 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     var pizzaElements = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDX(pizzaElements[0], size);
-    var newwidth = (pizzaElements[0].offsetWidth + dx) + 'px';
+    var newwidth = (f[0].offsetWidth + dx) + 'px';
 
     for (var i = 0; i < pizzaElements.length;i++) {
       pizzaElements[i].style.width = newwidth;
@@ -485,8 +485,11 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+// Moved pizzaDivs outside the for loop, to avoid repeating a DOM call on each pass
+
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
+//  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -514,16 +517,27 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
-var items;
 
 function updatePositions() {
-  //console.log('update position')
   frame++;
   window.performance.mark("mark_start_frame");
 
-  //var items = document.getElementsByClassName('mover');
+// changed to select the moving pizzas element by class name
+
+  var items = document.getElementsByClassName('mover');
+
+  //moved the phase calculation into its own for loop that appends each
+  //phase to an array, rather then declaring and setting the phase variable
+  //each time
+
+  phaseList =[];
+  for (var j = 0; j< 5;j++) {
+    phaseList.push(Math.sin((document.body.scrollTop/1250) +(j & 5)));
+  }
+  // The pizza item styles are changed by accessing the relevant element
+  // of the phaseList array, rather than  re using the phase variable
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -555,6 +569,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  items = document.getElementsByClassName('mover');
+
   updatePositions();
 });
