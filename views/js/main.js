@@ -558,8 +558,13 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  //change number of pizza, measure the console, timeline
-  for (var i = 0; i < 35; i++) {
+  //change number of pizzas generated to be based on the window height
+  var rows = Math.round(window.screen.height / s);
+  var pizzaCount = rows * cols;
+  // change query selector call to getElementById, saved this DOM call
+  //to local variable, movingPizzas outside of the loop
+  var movingPizzas = document.getElementById('movingPizzas1');
+  for (var i = 0; i < pizzaCount; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -567,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas.appendChild(elem);
   }
 
   updatePositions();
