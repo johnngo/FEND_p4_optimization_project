@@ -460,7 +460,7 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     var pizzaElements = document.getElementsByClassName("randomPizzaContainer");
     var dx = determineDX(pizzaElements[0], size);
-    var newwidth = (f[0].offsetWidth + dx) + 'px';
+    var newwidth = (pizzaElements[0].offsetWidth + dx) + 'px';
 
     for (var i = 0; i < pizzaElements.length;i++) {
       pizzaElements[i].style.width = newwidth;
@@ -538,7 +538,7 @@ function updatePositions() {
   // of the phaseList array, rather than  re using the phase variable
   for (var i = 0; i < items.length; i++) {
     //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.left = items[i].basicLeft + 100 * phaseList[(i % 5)] + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
