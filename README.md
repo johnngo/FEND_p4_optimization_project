@@ -37,6 +37,8 @@ Optimization of view/js/main.js
 
 11. Declared elem variable in the initialisation of the for loop  will prevent it from being create every time the loop is executed
 
+12. added backface-visibility: hidden;transform: translateZ(0); to CSS
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
