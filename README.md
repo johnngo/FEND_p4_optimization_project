@@ -31,6 +31,11 @@ Optimization of view/js/main.js
 
 8. Changed querySelector call to getElementById outside of the loop and saved this DOM call to local variable
 
+9. Changed querySelector to getElementByID in the changeSliderLabel
+
+10. Saved array length in a local variable, so array's length property is not accessed to check its value at each iteration
+
+11. Declared elem variable in the initialisation of the for loop  will prevent it from being create every time the loop is executed
 
 ## Website Performance Optimization portfolio project
 
