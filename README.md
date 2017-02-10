@@ -12,6 +12,8 @@ Optimization of index.html
 
 5. reduce the size of the pizzaria.jpg
 
+6. compress all images in img directory
+
 
 Optimization of view/js/main.js
 
